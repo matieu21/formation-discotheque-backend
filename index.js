@@ -117,19 +117,27 @@ app.get('/userLoginSQL', (req, res) => {
     //recuperation des donnes envoyées via le formualaire client
     const params = [req.query.pseudo_user, req.query.password_user]
     // Exécute une requête SQL de type INSERT
-    connexion.query(' INSERT INTO users WHERE pseudo_user=? AND password_user=?', params, (err, affected) => {
+    connexion.query(' SELECT * FROM users WHERE pseudo_user=? AND password_user=?', params, (err, rows) => {
       // SI OK
       if (!err) {
-        console.log(affected)
-        res.status(200).json(affected)
+        console.log(rows)
+       let message=""
+        if (rows.length == 1) {
+         
+          message = "Vous êtes connecté(e)"
+        } else {
+          message = "Identifiant/Password non valide"
+          console.log("")
+        }
+        console.log(message)
+        res.status(200).json(message)
       }
       // Si KO
       else {
-        console.log(affected)
+        
         console.log("\nErreur d'exécution de la requête !" + err)
-        let array = []
-        array.push("Erreur d'exécution de la requête !" + err)
-        res.status(200).json(array)
+        
+        res.status(200).json("\nErreur d'exécution de la requête !" + err)
       }
     })
   
@@ -503,7 +511,7 @@ app.get('/showAlbumSQL', (req, res) => {
   connexion.connect()
   
   // Exécute une requête SQL de type SELECT
-  connexion.query('SELECT * FROM albums', (err, rows, fields) => {
+  connexion.query('SELECT * FROM albums ORDER BY name_album', (err, rows, fields) => {
     // SI OK
     if (!err) {
       console.log(rows)
@@ -533,7 +541,7 @@ app.get('/showArtists', (req, res)=>{
   })
   connexion.connect()
 
-  connexion.query('SELECT * from artists', (err, rows, fields)=>{
+  connexion.query('SELECT * from artists ORDER BY name_artist', (err, rows, fields)=>{
     if(!err){
       console.log(rows)
       res.status(200).jsonp(rows)
@@ -591,7 +599,7 @@ app.get('/showAlbumDetail', (req, res) => {
   connexion.connect()
   const param = [req.query.id_artist]
   // Exécute une requête SQL de type SELECT
-  connexion.query('SELECT * FROM albums WHERE id_artist = ?', param, (err, rows, fields) => {
+  connexion.query('SELECT * FROM albums WHERE id_artist = ? ORDER BY year_release_album', param, (err, rows, fields) => {
     // SI OK
     if (!err) {
       console.log(rows)
@@ -626,7 +634,7 @@ app.get('/getAlbumDetail', (req, res) => {
   connexion.connect()
   const param = [req.query.id_album]
   // Exécute une requête SQL de type SELECT
-  connexion.query('SELECT * FROM tracks WHERE id_album = ?', param, (err, rows, fields) => {
+  connexion.query('SELECT * FROM tracks WHERE id_album = ? ORDER BY order_title_track', param, (err, rows, fields) => {
     // SI OK
     if (!err) {
       console.log(rows)
@@ -668,6 +676,14 @@ app.get('/showTracksLyrics', (req, res)=>{
   })
 connexion.end()
 })
+
+
+
+
+
+
+
+
 ///fin d'app.get('/showUsersSQL'
 app.listen(8082, () => {
     console.log("Serveur à l'écoute sur le port 8082")
