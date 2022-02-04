@@ -7,11 +7,7 @@ const mysql = require('mysql')
 const http = require('http')
 
 
-// http://localhost:8082/
-app.get('/', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.send("pppppp")
-})
+
 
 // http://localhost:8082/showUsersSQL
 app.get('/showUsersSQL', (req, res) => {
@@ -96,10 +92,10 @@ app.get('/inscription', (req, res) => {
 
  
 
-// http://localhost:8082/userLoginSQL?pseudo_user=..&password_user=..
+// http://localhost:8082/userLogin?pseudo_user=..&password_user=..
 // 
 // Vers du MySQL (Insert)
-app.get('/userLoginSQL', (req, res) => {
+app.get('/userLogin', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   
@@ -250,10 +246,10 @@ app.get('/userInsertViaProcStockSQLGET', (req, res) => {
 
 
 
-  // http://localhost:8082/artistInsertViaProcStockSQLGET?name_artist=Radiohead&years_start_artist=1992&years_end_artist=NULL&psite_web_artist=www.radiohead.com&photo_artist=https://images.radio-canada.ca/q_auto,w_960/v1/ici-info/16x9/radiohead-coffret-anniversaire-kid-a-amnesiac.jpg
+  // http://localhost:8082/artistInsert?name_artist=Radiohead&years_start_artist=1992&years_end_artist=NULL&psite_web_artist=www.radiohead.com&photo_artist=https://images.radio-canada.ca/q_auto,w_960/v1/ici-info/16x9/radiohead-coffret-anniversaire-kid-a-amnesiac.jpg
 
 // Vers du MySQL (Insert)
-app.get('/artistInsertViaProcStockSQLGET', (req, res) => {
+app.get('/artistInsert', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
@@ -284,10 +280,10 @@ app.get('/artistInsertViaProcStockSQLGET', (req, res) => {
   connexion.end() /// Déconnexion
 }) /// app.get('/villeInsertViaProcStockSQLGET'
 
-// http://localhost:8082/albumInsertViaProcStockSQLGET?name_album=OK&nbspComputer&photo_album=https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F715LZJ5qX0L._SL1200_.jpg&imgrefurl=https%3A%2F%2Fwww.amazon.fr%2FOK-Computer-Radiohead%2Fdp%2FB000002UJQ&tbnid=r-TjdkmjTpBKoM&vet=12ahUKEwjc7K244Pn0AhUE0YUKHZtRAx8QMygAegUIARCpAQ..i&docid=L4EXtijqVSFE_M&w=1200&h=1200&itg=1&q=ok%20computer&ved=2ahUKEwjc7K244Pn0AhUE0YUKHZtRAx8QMygAegUIARCpAQ&number_tracks_album=12&duration_album=43.22&similar_album=PabloHoney&year_release_album=1999&id_artist=5
+// http://localhost:8082/albumInsert?name_album=OK&nbspComputer&photo_album=https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F715LZJ5qX0L._SL1200_.jpg&imgrefurl=https%3A%2F%2Fwww.amazon.fr%2FOK-Computer-Radiohead%2Fdp%2FB000002UJQ&tbnid=r-TjdkmjTpBKoM&vet=12ahUKEwjc7K244Pn0AhUE0YUKHZtRAx8QMygAegUIARCpAQ..i&docid=L4EXtijqVSFE_M&w=1200&h=1200&itg=1&q=ok%20computer&ved=2ahUKEwjc7K244Pn0AhUE0YUKHZtRAx8QMygAegUIARCpAQ&number_tracks_album=12&duration_album=43.22&similar_album=PabloHoney&year_release_album=1999&id_artist=5
 
 // Vers du MySQL (Insert)
-app.get('/albumInsertViaProcStockSQLGET', (req, res) => {
+app.get('/albumInsert', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
@@ -318,10 +314,10 @@ app.get('/albumInsertViaProcStockSQLGET', (req, res) => {
   // Déconnexion de la BD
   connexion.end() /// Déconnexion
 }) /// app.get('/villeInsertViaProcStockSQLGET'
-// http://localhost:8082/tracksInsertViaProcStockSQLGET?name_track=Karma&nbspPolice&duration_track=4.33&author_track=radiohead&lyrics_track=Karma&nbspPolice,Areestthisgrils...&order_title_track=5&id_album=2
+// http://localhost:8082/tracksInsert?name_track=Karma&nbspPolice&duration_track=4.33&author_track=radiohead&lyrics_track=Karma&nbspPolice,Areestthisgrils...&order_title_track=5&id_album=2
 
 // Vers du MySQL (Insert)
-app.get('/tracksInsertViaProcStockSQLGET', (req, res) => {
+app.get('/tracksInsert', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
@@ -422,8 +418,8 @@ app.get('/artistDeleteViaProcStockSQLGET', (req, res) => {
   connexion.end() /// Déconnexion
 }) /// app.get('/villeInsertViaProcStockSQLGE
 
-// http://localhost:8082/showArtistSQL?name_artist=U2
-app.get('/showArtistSQL', (req, res) => {
+// http://localhost:8082/showArtistByName?name_artist=U2
+app.get('/showArtistByName', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
@@ -493,38 +489,31 @@ app.get('/showAlbumSQLViaProcStockSQLGET', (req, res) => {
 ///fin d'app.get('/showUsersSQL'
 
 
-// http://localhost:8082/showAlbumSQL
-app.get('/showAlbumSQL', (req, res) => {
+//http://localhost:8082/showAlbums
+app.get('/showAlbums', (req, res)=>{
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
-  // Crée un objet de type Connection
   const connexion = mysql.createConnection({
-    host: 'localhost',
-    port: '3306',
-    user: 'web',
-    password: '123',
+    host: 'localhost', 
+    port:'3306', 
+    user: 'web', 
+    password: '123', 
     database: 'discotheque'
   })
-
-  // Connexion à la BD
   connexion.connect()
-  
-  // Exécute une requête SQL de type SELECT
-  connexion.query('SELECT * FROM albums ORDER BY name_album', (err, rows, fields) => {
-    // SI OK
-    if (!err) {
+
+  connexion.query('SELECT * from albums ORDER BY name_album', (err, rows, fields)=>{
+    if(!err){
       console.log(rows)
-      res.status(200).json(rows)
+      res.status(200).jsonp(rows)
     }
-    // Si KO
     else {
-      console.log("\nErreur d'exécution de la requête !" + err)
-      res.status(200).json("\nErreur d'exécution de la requête !" + err)
+      console.log("\nErreur d'éxecution de la reqête !" +err)
+      res.status(200).json("\nErreur d'éxecution de la reqête !" +err)
     }
   })
-  // Déconnexion de la BD
-  connexion.end() /// Déconnexion
+connexion.end()
 })
 
 //http://localhost:8082/showArtists
