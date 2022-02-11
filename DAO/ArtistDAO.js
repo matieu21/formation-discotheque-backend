@@ -1,141 +1,76 @@
-/*
- PaysDAO.js
- */
+const connexion = require("./ConnexionDB")
 
-const mysql = require('mysql')
 
-class ArtistDAO {
 
-    /*
-    PROMESSE
-    */
-    /**
-     * 
-     * @returns 
-     */
-    selectAllArtist = () => {
 
-        const requete = (cnx) => {
-            let message = ""
-            return new Promise((resolve, reject) => {
-                // Exécute une requête SQL de type SELECT
-                let sql = "SELECT * FROM artists"
-                cnx.query(sql, (err, rows, fields) => {
-                    // SI OK
-                    if (!err) {
-                        // console.log("\nLes lignes de la table :")
-                        // console.log(rows)
-                        // OBLIGATOIRE
+class ArtistDAO
+ {
+    selectAll(connexion){
+        const query = (connexion)=>{
+            return new Promise((resolve, reject)=>{
+                const sql = 'SELECT * from artists ORDER BY name_artist'
+                connexion.query(sql, (err, rows, fields)=>{
+                    if(!err){
                         resolve(rows)
-                        //message = rows
-                    }
-                    // Si KO
-                    else {
-                        //console.log("\nErreur d\'exécution de la requête !" + err)
-                        // OBLIGATOIRE
+                    } else {
                         reject("Erreur d\'exécution de la requête ! " + err)
-                        //message = "Erreur d\'exécution de la requête ! " + err
                     }
                 })
-            } /// return
-            ) /// promise
-        } /// function requete
+            })
+        }
 
-        /*
-        "MAIN" !!! DE LA PROMESSE
-        */
-        console.log("selectAllArtist !")
-        // Charge la bibliothèque mysql et crée un « objet »
-        const mysql = require("mysql")
+        
 
-        // Crée un objet de type Connection
-        const connexion = mysql.createConnection({
-            host: "localhost",
-            port: "3306",
-            user: "web",
-            password: "123",
-            database: "discotheque"
-        })
+        return query(connexion)
 
-        // Connexion à la BD
-        connexion.connect()
-        let message = "avant"
-        /*
-        L'appel de la promesse
-        */
-        message = requete(connexion)
-        connexion.end()
-        // Du coup le then().catch() à coder dans l'appelant
-        return message
-
-    } /// selectAllPaysWithPromise
-
-
-    /**
-     * 
-     * @param {*} pays 
-     * @returns 
-     */
-    insert = (artist) => {
-        console.log("Début insert")
-        console.log(artist.getId())
-        console.log(artist.getName())
-        const requete = (cnx, artist) => {
-            let message = ""
+    }
+   
+    selectOne(connexion, name) {
+        const query = (connexion) => {
             return new Promise((resolve, reject) => {
-                // Exécute une requête SQL de type SELECT
-                let sql = "INSERT INTO artists(id_artist, name_artist) VALUES(?,?)"
-                const params = new Array(artist.getId(), artist.getName());
-                console.log("Dans la promesse")
-                console.log(artist.getId())
-                console.log(artist.getName())
-                cnx.query(sql, params, function (err, result) {
-                    // SI OK 
+                const sql = 'SELECT * FROM artists WHERE name_artist = ?'
+                const params = [name]
+                connexion.query(sql, params, (err, rows, fields) => {
                     if (!err) {
-                        console.log('Result : ', result); // ou  result.affectedRows
-                        console.log('Result.affecteed : ', result.affectedRows); // ou  result.affectedRows
-                        resolve(result.affectedRows)
+                      resolve(rows)
+                    } else {
+                      reject("Erreur d\'exécution de la requête ! " + err)
                     }
-                    // Si KO 
-                    else {
-                        console.log('Erreur d\'exécution ! \n' + err);
+                })
+            })
+        }
+
+        return query(connexion)
+    }
+
+
+    insert = (connexion, artist) => {
+        const query = (connexion)=>{
+            return new Promise((resolve, reject)=>{
+                let sql = "CALL artistInsert(?,?,?,?)"
+                const params = new Array(artist.getName(), artist.getYears(), artist.getSite(), artist.getPhoto())
+                console.log('promesse')
+                console.log(artist.getName())
+                console.log(artist.getYears())
+                console.log(artist.getSite())
+                console.log(artist.getPhoto())
+                connexion.query(sql, params, (err, result)=>{
+                    if(!err){
+                        console.log("result: " , result)
+                        console.log('result affected:', result.affectedRows)
+                        resolve(result.affectedRows)
+                    }else {
+                        console.log('Erreur d\'exécution ! \n' + err)
                         reject("Erreur d\'exécution de la requête ! " + err)
                     }
                 })
-            } /// return
-            ) /// promise
-        } /// function requete
-
-        /*
-        "MAIN" !!! DE LA PROMESSE
-        */
-        console.log("insertArtistWithPromise !")
-        // Charge la bibliothèque mysql et crée un « objet »
-        const mysql = require("mysql")
-
-        // Crée un objet de type Connection
-        const connexion = mysql.createConnection({
-            host: "localhost",
-            port: "3306",
-            user: "web",
-            password: "123",
-            database: "discotheque"
-        })
-
-        // Connexion à la BD
-        connexion.connect()
-        let message = "avant"
-        /*
-        L'appel de la promesse
-        */
-        message = requete(connexion, artist)
-        connexion.end()
-        // Du coup le then().catch() à coder dans l'appelant
-        return message
-
-    } /// insert
-
-} /// class PaysDAO
+            })
+            
+        }
+        return query(connexion)
+    }
+        
+      
+} 
 
 module.exports = ArtistDAO
-
