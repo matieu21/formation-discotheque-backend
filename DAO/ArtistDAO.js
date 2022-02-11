@@ -1,16 +1,10 @@
-const connexion = require("./ConnexionDB")
-
-
-
-
-class ArtistDAO
- {
-    selectAll(connexion){
-        const query = (connexion)=>{
-            return new Promise((resolve, reject)=>{
+class ArtistDAO {
+    selectAll(connexion) {
+        const query = (connexion) => {
+            return new Promise((resolve, reject) => {
                 const sql = 'SELECT * from artists ORDER BY name_artist'
-                connexion.query(sql, (err, rows, fields)=>{
-                    if(!err){
+                connexion.query(sql, (err, rows, fields) => {
+                    if (!err) {
                         resolve(rows)
                     } else {
                         reject("Erreur d\'exécution de la requête ! " + err)
@@ -18,13 +12,10 @@ class ArtistDAO
                 })
             })
         }
-
-        
-
         return query(connexion)
-
     }
-   
+
+
     selectOne(connexion, name) {
         const query = (connexion) => {
             return new Promise((resolve, reject) => {
@@ -32,45 +23,44 @@ class ArtistDAO
                 const params = [name]
                 connexion.query(sql, params, (err, rows, fields) => {
                     if (!err) {
-                      resolve(rows)
+                        resolve(rows)
                     } else {
-                      reject("Erreur d\'exécution de la requête ! " + err)
+                        reject("Erreur d\'exécution de la requête ! " + err)
                     }
                 })
             })
         }
-
         return query(connexion)
     }
 
 
     insert = (connexion, artist) => {
-        const query = (connexion)=>{
-            return new Promise((resolve, reject)=>{
-                let sql = "CALL artistInsert(?,?,?,?)"
-                const params = new Array(artist.getName(), artist.getYears(), artist.getSite(), artist.getPhoto())
+        const query = (connexion) => {
+            return new Promise((resolve, reject) => {
+                let sql = "CALL artistInsert(?,?,?)"
+
+                const params = new Array(artist.getName(), artist.getSite(), artist.getPhoto())
                 console.log('promesse')
                 console.log(artist.getName())
-                console.log(artist.getYears())
+
                 console.log(artist.getSite())
                 console.log(artist.getPhoto())
-                connexion.query(sql, params, (err, result)=>{
-                    if(!err){
-                        console.log("result: " , result)
+                connexion.query(sql, params, (err, result) => {
+                    if (!err) {
+                        console.log("result: ", result)
                         console.log('result affected:', result.affectedRows)
                         resolve(result.affectedRows)
-                    }else {
+                    } else {
                         console.log('Erreur d\'exécution ! \n' + err)
                         reject("Erreur d\'exécution de la requête ! " + err)
                     }
                 })
             })
-            
         }
         return query(connexion)
     }
-        
-      
-} 
+
+
+}
 
 module.exports = ArtistDAO
