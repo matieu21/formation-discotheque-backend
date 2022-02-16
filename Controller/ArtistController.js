@@ -12,7 +12,7 @@ class ArtistController {
 
     all(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
 
         ArtistDao.selectAll(connexion).then(result => {
             res.status(200).json(result)
@@ -24,7 +24,7 @@ class ArtistController {
 
     show(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
         ArtistDao.selectOne(connexion, req.query.name_artist).then(result => {
             res.status(200).json(result)
         }).catch(e => {
@@ -38,6 +38,7 @@ class ArtistController {
         let siteWebArtist = req.query.site_web_artist
         let photoArtist = req.query.photo_artist
         let ArtistDto = new ArtistDTOClass(nameArtist, siteWebArtist, photoArtist)
+        console.log(req)
         res.setHeader('Access-Control-Allow-Origin', '*')
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
         ArtistDao.insert(connexion, ArtistDto)

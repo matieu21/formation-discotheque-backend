@@ -40,11 +40,7 @@ class ArtistDAO {
                 let sql = "CALL artistInsert(?,?,?)"
 
                 const params = new Array(artist.getName(), artist.getSite(), artist.getPhoto())
-                console.log('promesse')
-                console.log(artist.getName())
 
-                console.log(artist.getSite())
-                console.log(artist.getPhoto())
                 connexion.query(sql, params, (err, result) => {
                     if (!err) {
                         console.log("result: ", result)

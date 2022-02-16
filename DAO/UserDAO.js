@@ -29,7 +29,6 @@ class UserDAO {
                 })
             })
         }
-
         return query(connexion)
     }
 

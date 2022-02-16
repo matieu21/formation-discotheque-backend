@@ -1,6 +1,9 @@
 //Importation d'express et creation d'une constante pour la gestion de nos routes
-const express= require('express')
-const app= express()
+const cors = require('cors')
+const express = require('express')
+const app = express()
+
+app.use(cors())
 
 //Creation de constantes pour appeler nos controlleurs avec require
 const UserControllerClass = require('./Controller/UserController')
@@ -25,7 +28,7 @@ app.get('/userDelete'       , UserController.delete)
 
 app.get('/showArtists'      , ArtistController.all)
 app.get('/showArtistByName' , ArtistController.show)
-app.get('/artistInsert'     , ArtistController.insert)
+app.post('/artistInsert'     , ArtistController.insert)
 
 app.get('/showAlbums'       , AlbumController.all)
 app.get('/showAlbumDetail'  , AlbumController.show)

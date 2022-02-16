@@ -9,19 +9,18 @@ let AlbumDao = new AlbumDAOClass
 class AlbumController {
     all(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
 
         AlbumDao.selectAll(connexion).then(result => {
             res.status(200).json(result)
         }).catch(e => {
             res.status(200).json("\nErreur d'exécution de la requête !" + e.sqlMessage)
         })
-
     }
 
     show(req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*')
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
 
         AlbumDao.selectOne(connexion, req.query.id_artist).then(result => {
             res.status(200).json(result)
