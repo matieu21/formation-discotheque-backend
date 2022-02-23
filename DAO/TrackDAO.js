@@ -21,7 +21,7 @@ class TrackDAO{
     getLyrics(connexion, id){
         const query = (connexion)=>{
             return new Promise ((resolve, reject)=>{
-                const sql = 'SELECT lyrics_track from tracks where id_track = ?'
+                const sql = 'SELECT name_track, lyrics_track from tracks where id_track = ?'
                 const params = [id]
                 connexion.query(sql, params, (err, rows, fields)=>{
                     if (!err) {

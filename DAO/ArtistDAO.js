@@ -19,7 +19,7 @@ class ArtistDAO {
     selectOne(connexion, name) {
         const query = (connexion) => {
             return new Promise((resolve, reject) => {
-                const sql = 'SELECT * FROM artists WHERE name_artist = ?'
+                const sql = 'CALL artistSelect(?)'
                 const params = [name]
                 connexion.query(sql, params, (err, rows, fields) => {
                     if (!err) {
@@ -41,6 +41,8 @@ class ArtistDAO {
 
                 const params = new Array(artist.getName(), artist.getSite(), artist.getPhoto())
 
+                console.log(artist)
+
                 connexion.query(sql, params, (err, result) => {
                     if (!err) {
                         console.log("result: ", result)
@@ -48,12 +50,21 @@ class ArtistDAO {
                         resolve(result.affectedRows)
                     } else {
                         console.log('Erreur d\'exécution ! \n' + err)
-                        reject("Erreur d\'exécution de la requête ! " + err)
+                        reject("Erreur d\'exécution de la requête ! PAF " + err)
                     }
                 })
             })
         }
         return query(connexion)
+    }
+
+    update = (connexion, artist)=>{
+        const query = (connexion)=>{
+            return new Promise((resolve, reject)=>{
+                let sql = "CALL artistUpdate(?,?,?,?)"
+                const params = new Array(artist.setName(), artist.setSite(), artist.getPhoto(), artist.setId)
+            })
+        }
     }
 
 

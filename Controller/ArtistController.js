@@ -34,11 +34,11 @@ class ArtistController {
     }
 
     insert(req, res) {
-        let nameArtist = req.query.name_artist
-        let siteWebArtist = req.query.site_web_artist
-        let photoArtist = req.query.photo_artist
+        let nameArtist = req.body.name_artist
+        let siteWebArtist = req.body.site_web_artist
+        let photoArtist = req.body.photo_artist
         let ArtistDto = new ArtistDTOClass(nameArtist, siteWebArtist, photoArtist)
-        console.log(req)
+       
         res.setHeader('Access-Control-Allow-Origin', '*')
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
         ArtistDao.insert(connexion, ArtistDto)

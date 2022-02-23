@@ -2,8 +2,11 @@
 const cors = require('cors')
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 
 app.use(cors())
+app.use(express.json())
+// app.use(bodyParser.urlencoded({extended: true}))
 
 //Creation de constantes pour appeler nos controlleurs avec require
 const UserControllerClass = require('./Controller/UserController')
@@ -28,7 +31,7 @@ app.get('/userDelete'       , UserController.delete)
 
 app.get('/showArtists'      , ArtistController.all)
 app.get('/showArtistByName' , ArtistController.show)
-app.post('/artistInsert'     , ArtistController.insert)
+app.post('/artistInsert'    , ArtistController.insert)
 
 app.get('/showAlbums'       , AlbumController.all)
 app.get('/showAlbumDetail'  , AlbumController.show)
